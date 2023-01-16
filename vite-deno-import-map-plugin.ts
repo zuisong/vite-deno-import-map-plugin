@@ -29,22 +29,18 @@ export function importMaps(options: ImportMap | (() => ImportMap)) {
 }
 
 function resolvePath(path: string) {
-  if (path.startsWith("npm:")) {
-    return path;
-  }
-
-  if (path.startsWith("https:")) {
-    return path;
-  }
-
-  if (path.startsWith("http:")) {
-    return path;
-  }
-
-  const res = resolve(path);
-  if (path.endsWith("/")) {
-    return `${res}/`;
+  if (isLocalImport(path)) {
+    const res = resolve(path);
+    if (path.endsWith("/")) {
+      return `${res}/`;
+    } else {
+      return res;
+    }
   } else {
-    return res;
+    return path;
   }
+}
+
+function isLocalImport(path: string) {
+  return ["./", "../"].some((it) => path.startsWith(it));
 }
