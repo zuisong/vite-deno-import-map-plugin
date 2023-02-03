@@ -1,4 +1,4 @@
-import { resolve } from "https://deno.land/std@0.172.0/path/mod.ts";
+import { resolve } from "node:path";
 
 export type ImportMap = {
   imports?: Record<string, string>;
